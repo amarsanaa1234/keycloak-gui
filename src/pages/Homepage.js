@@ -6,7 +6,7 @@ const Homepage = () => {
 
     return (
             <Layout style={{marginTop: '200px'}}>
-                <p>asdas</p>
+                <p>HOME page</p>
             </Layout>
     );
 };

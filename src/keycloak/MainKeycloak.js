@@ -1,14 +1,13 @@
 import { KeycloakProvider } from "@react-keycloak/web";
 import Keycloak from "keycloak-js";
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import contextLogin from "../components/contextLogin";
 import contextKeycloak from "../keycloak/contextKeycloak";
-import Homepage from "../pages/Homepage";
-import MainTeacher from "../components/teacherComponents/MainTeacher";
-import MainStudent from "../components/studentComponents/mainStudent/MainStudent";
 import MainHeader from "../components/toolComponents/MainHeader";
-import {Layout} from "antd";
+import {Layout, Menu, theme} from "antd";
 import MainFooter from "../components/toolComponents/MainFooter";
+import {RoleSpecificComponents} from "../components/RoleSpecificComponents";
+
 const { REACT_APP_KEYCLOAK_URL, REACT_APP_KEYCLOAK_REALM, REACT_APP_KEYCLOAK_CLIENT_ID } = process.env;
 
 const keycloak = new Keycloak({
@@ -25,7 +24,8 @@ const keycloakProviderInitConfig = {
     checkLoginIframe: false,
     onLoad: 'login-required'
 };
-const { Content } = Layout;
+const { Sider, Content } = Layout;
+
 
 const layoutStyle = {
     borderRadius: '8px',
@@ -36,11 +36,24 @@ const contentStyle = {
     textAlign: 'center',
     height: '100vh'
 }
+function getItem(label, key, icon, children, type) {
+    return {
+        key,
+        icon,
+        children,
+        label,
+        type,
+    };
+}
 const MainKeycloak = () => {
     const { setKeycloakToken, setLoggedUserDetail } = useContext(contextLogin);
     const [loadingUseEffect, setLoadingUseEffect] = useState(true);
     const [loadingKeycloak, setLoadingKeycloak] = useState(true);
     const [role, setRole] = useState([]);
+const roleComponents = [];
+    const {
+        token: { colorBgContainer, borderRadiusLG },
+    } = theme.useToken();
 
     const loginUser = () => {
         keycloak.login();
@@ -50,7 +63,6 @@ const MainKeycloak = () => {
     };
 
     const onKeycloakEvent = (event) => {
-        console.log(event);
         if (event === 'onReady') {
             setLoadingKeycloak(false);
         } else if (event === "onAuthSuccess") {
@@ -60,20 +72,21 @@ const MainKeycloak = () => {
     const onKeycloakTokens = (tokens) => {
         const { token } = tokens;
         if (token) {
-            console.log('token: ', keycloak.tokenParsed);
             setKeycloakToken(token);
             setLoggedUserDetail(keycloak.tokenParsed);
             setRole(keycloak.tokenParsed.resource_access.keycloak_rest_api.roles);
         }
     };
-    const roleComponents = role.map((item, index)=> {
-            if (item === 'client_student') {
-                return <MainStudent/>
-            } else if(item === 'client_teacher'){
-                return  <MainTeacher/>
-            }
-        }
-    )
+    const roleComp = () =>{
+        role.map((item, index) => {
+            const it = RoleSpecificComponents[item];
+            roleComponents.push(
+                getItem(it?.name, it?.id, it?.icon)
+            );
+        });
+    };
+    console.log(roleComponents)
+
 
     React.useEffect(() => {
         setLoadingUseEffect(false)
@@ -96,9 +109,34 @@ const MainKeycloak = () => {
                     >
                         {!loadingKeycloak &&
                             <Layout style={layoutStyle}>
+                                {roleComp()}
                                 <Content style={contentStyle}>
                                     <MainHeader/>
-                                    {roleComponents}
+                                    <Layout style={{height:'100%'}}>
+                                        <Sider
+                                            style={{
+                                                background: colorBgContainer,
+                                            }}
+                                            width={256}
+                                        >
+                                            <Menu
+                                                defaultSelectedKeys={['1']}
+                                                mode="inline"
+                                                theme="dark"
+                                                items={roleComponents}
+                                            />
+                                        </Sider>
+                                        <Content
+                                            style={{
+                                                padding: '0 24px',
+                                                minHeight: 280,
+                                                fontSize: '40px',
+                                                fontWeight: 'bold'
+                                            }}
+                                        >
+                                            Student
+                                        </Content>
+                                    </Layout>
                                     <MainFooter/>
                                 </Content>
                             </Layout>
