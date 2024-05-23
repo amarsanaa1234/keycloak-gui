@@ -35,7 +35,6 @@ const items = [
         getItem('ТОДОРХОЙЛОЛТ', 'sub3', null, [getItem('ТОДОРХОЙЛОЛТ-Англи', '11'), getItem('ТОДОРХОЙЛОЛТ-Монгол', '12')]),
     ]),
 ];
-console.log('items', items);
 const MainTeacher = () => {
 
     const {

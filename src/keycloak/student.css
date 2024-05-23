@@ -1,0 +1,43 @@
+
+.ant-picker-body{
+    background-color: #1490ff;
+}
+.ant-radio-group{
+    display: none !important;
+}
+.ant-picker-calendar-header{
+    display: flex !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+}
+th{
+    color: white !important;
+}
+.ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-range-end .ant-picker-cell-inner {
+    background-color: #1890ff;
+    color: white;
+}
+
+.ant-picker-cell:hover .ant-picker-cell-inner {
+    background-color: #e6f7ff;
+}
+
+.ant-picker-panel {
+    background-color: #ffff;
+}
+.ant-card-body{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px !important;
+    gap: 10px;
+}
+p{
+    margin: 0px;
+    padding: 0px;
+}
