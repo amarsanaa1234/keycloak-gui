@@ -41,3 +41,11 @@ p{
     margin: 0px;
     padding: 0px;
 }
+.profile{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    color: white;
+}
