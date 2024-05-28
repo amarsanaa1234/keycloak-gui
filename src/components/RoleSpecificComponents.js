@@ -1,7 +1,5 @@
 import { perRoleType } from "../tools/utils";
 import React from "react";
-import MainTeacher from "./teacherComponents/MainTeacher";
-import MainStudent from "./studentComponents/mainStudent/MainStudent";
 import Homepage from "../pages/Homepage";
 import {MenuOutlined, InboxOutlined, ExclamationOutlined, CalendarOutlined, CheckCircleOutlined, FieldTimeOutlined, ProfileOutlined, DatabaseOutlined, ArrowRightOutlined, } from "@ant-design/icons";
 
@@ -44,7 +42,8 @@ const RoleSpecificComponents = {
     icon:<ExclamationOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Study_plan: {
     id:"4",
@@ -56,7 +55,8 @@ const RoleSpecificComponents = {
     icon:<CalendarOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Recommended_training_plan: {
     id:"5",
@@ -68,7 +68,8 @@ const RoleSpecificComponents = {
     icon:<CalendarOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Payment_information: {
     id:"6",
@@ -80,7 +81,8 @@ const RoleSpecificComponents = {
     icon:<CheckCircleOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Tests_and_progress_scores: {
     id:"7",
@@ -92,7 +94,8 @@ const RoleSpecificComponents = {
     icon:<FieldTimeOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Amount_information: {
     id:"8",
@@ -104,7 +107,8 @@ const RoleSpecificComponents = {
     icon:<ProfileOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Course_choice_request: {
     id:"9",
@@ -116,7 +120,8 @@ const RoleSpecificComponents = {
     icon:<ProfileOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Graduate_Student_Circular: {
     id:"10",
@@ -128,7 +133,8 @@ const RoleSpecificComponents = {
     icon:<ProfileOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Update_your_personal_information: {
     id:"11",
@@ -140,7 +146,8 @@ const RoleSpecificComponents = {
     icon:<ProfileOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Examination_schedule: {
     id:"12",
@@ -152,7 +159,8 @@ const RoleSpecificComponents = {
     icon:<ProfileOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Scholarship: {
     id:"13",
@@ -164,7 +172,8 @@ const RoleSpecificComponents = {
     icon:<DatabaseOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   // Хичээл
   lesson: {
@@ -190,7 +199,8 @@ const RoleSpecificComponents = {
     icon:<ArrowRightOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   course_selection2: {
     id:"16",
@@ -202,7 +212,8 @@ const RoleSpecificComponents = {
     icon:<ArrowRightOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   class_schedule: {
     id:"17",
@@ -214,7 +225,8 @@ const RoleSpecificComponents = {
     icon:<ArrowRightOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   // ТОДОРХОЙЛОЛТ
   Description: {
@@ -240,7 +252,8 @@ const RoleSpecificComponents = {
     icon:<ArrowRightOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
   Description_english: {
     id:"20",
@@ -252,7 +265,8 @@ const RoleSpecificComponents = {
     icon:<ArrowRightOutlined />,
     permissions: {
       ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
-    }
+    },
+    subRouter:[]
   },
 // busad
   elec_learning: {

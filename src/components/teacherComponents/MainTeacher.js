@@ -38,7 +38,7 @@ const items = [
 const MainTeacher = () => {
 
     const {
-        token: { colorBgContainer, borderRadiusLG },
+        token: { colorBgContainer }
     } = theme.useToken();
     return (
         <Layout style={{height:'100%'}}>

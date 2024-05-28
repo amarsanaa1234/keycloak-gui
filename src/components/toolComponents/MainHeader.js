@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {Button, Flex, Image, Layout, Menu, Space, Tooltip, Statistic, Modal} from "antd";
+import {Button, Flex, Image, Layout, Space, Tooltip, Statistic, Modal} from "antd";
 import shutisImage from '../../img/mustlogo.png';
 import contextKeycloak from "../../keycloak/contextKeycloak";
 import {useKeycloak} from "@react-keycloak/web";
@@ -8,10 +8,6 @@ const {Countdown} = Statistic;
 
 
 const { Header} = Layout;
-const items1 = ['1', '2', '3'].map((key) => ({
-    key,
-    label: `nav ${key}`,
-}));
 const headerStyle = {
     textAlign: 'center',
     color: '#fff',
@@ -39,7 +35,7 @@ const MainHeader = () => {
     };
 
     const handleOk = () => {
-        setModalText('Амжилттай сунгаж байна?');
+        setModalText('');
         setConfirmLoading(true);
         setTimeout(() => {
             setOpen(false);

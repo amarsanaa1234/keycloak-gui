@@ -1,10 +1,10 @@
-import {KeycloakProvider, useKeycloak} from "@react-keycloak/web";
+import {KeycloakProvider} from "@react-keycloak/web";
 import Keycloak from "keycloak-js";
 import React, { useContext, useState } from "react";
 import contextLogin from "../components/contextLogin";
 import contextKeycloak from "../keycloak/contextKeycloak";
 import MainHeader from "../components/toolComponents/MainHeader";
-import {Layout, Menu, theme, Calendar, Card, Avatar} from "antd";
+import {Layout, Menu, Calendar, Card, Avatar} from "antd";
 import MainFooter from "../components/toolComponents/MainFooter";
 import {RoleSpecificComponents} from "../components/RoleSpecificComponents";
 import { UserOutlined, HomeOutlined, PoweroffOutlined, LockOutlined } from '@ant-design/icons';
@@ -27,15 +27,12 @@ const keycloakProviderInitConfig = {
     onLoad: 'login-required'
 };
 const { Sider, Content } = Layout;
-
-
 const layoutStyle = {
     borderRadius: '8px',
     width: '100vw',
     height: '100vh',
 }
 const contentStyle = {
-    textAlign: 'center',
     height: '100vh'
 }
 function getItem(label, key, icon, children, type) {
@@ -52,19 +49,15 @@ const MainKeycloak = () => {
     const { setKeycloakToken, setLoggedUserDetail } = useContext(contextLogin);
     const [loadingUseEffect, setLoadingUseEffect] = useState(true);
     const [loadingKeycloak, setLoadingKeycloak] = useState(true);
+    const [selectedMenuItem, setSelectedMenuItem] = useState("1");
     const [role, setRole] = useState([]);
     const roleComponents = [];
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
-
     const loginUser = () => {
         keycloak.login();
     };
     const logoutUser = () => {
         keycloak.logout();
     };
-
     const refreshToken = () =>{
         keycloak.updateToken();
     }
@@ -103,6 +96,14 @@ const MainKeycloak = () => {
         });
     };
 
+    const handleMenuClick = ({ key }) => {
+        setSelectedMenuItem(key);
+    };
+
+    const activeComponent = Object.values(roleComponents).find(
+        component => component.id === selectedMenuItem
+    )?.component;
+
     React.useEffect(() => {
         setLoadingUseEffect(false)
     }, []);
@@ -114,15 +115,8 @@ const MainKeycloak = () => {
                     keycloak={keycloak}
                     initConfig={keycloakProviderInitConfig}
                     onTokens={onKeycloakTokens}
-                    onEvent={onKeycloakEvent}
-                >
-                    <contextKeycloak.Provider
-                        value={{
-                            loginUser,
-                            logoutUser,
-                            refreshToken,
-                        }}
-                    >
+                    onEvent={onKeycloakEvent}>
+                    <contextKeycloak.Provider value={{loginUser, logoutUser, refreshToken}}>
                         {!loadingKeycloak &&
                             <Layout style={layoutStyle}>
                                 {roleComp()}
@@ -130,7 +124,7 @@ const MainKeycloak = () => {
                                     <MainHeader/>
                                     <Layout style={{height:'auto'}}>
                                         <Sider style={{background: '#001529'}} width={306}>
-                                            <Card style={{ width:'auto', margin: '30px 10px 0px 10px ', background: '#003765'}}>
+                                            <Card style={{ width:'auto', margin: '30px 10px 30px 10px ', background: '#003765'}}>
                                                 <Avatar shape="square" size={64} icon={<UserOutlined />} style={{ margin: '0px 30px 0px 0px '}}/>
                                                 <div className='profile'>
                                                     <p><HomeOutlined style={{marginRight: '5px'}}/>B200910803</p>
@@ -138,7 +132,11 @@ const MainKeycloak = () => {
                                                     <p><PoweroffOutlined style={{marginRight: '5px'}}/>Гарах</p>
                                                 </div>
                                             </Card>
-                                            <Menu defaultSelectedKeys={['1']} mode="inline" theme="dark" items={roleComponents}/>
+                                            <Menu defaultSelectedKeys={['1']}
+                                                  mode="inline"
+                                                  theme="dark"
+                                                  items={roleComponents}
+                                                  onClick={handleMenuClick}/>
                                             <Card style={{ width:'auto', margin: '30px 10px 0px 10px ', background: '#003765'}}>
                                                 <Card style={{ width:'auto', background: '#001529', color: '#fff'}}>
                                                     <h1>XVII</h1>
@@ -160,7 +158,7 @@ const MainKeycloak = () => {
                                                 fontWeight: 'bold'
                                             }}
                                         >
-                                            Student
+                                            {activeComponent}
                                         </Content>
                                     </Layout>
                                     <MainFooter/>
