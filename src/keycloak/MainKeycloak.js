@@ -1,4 +1,4 @@
-import { KeycloakProvider } from "@react-keycloak/web";
+import {KeycloakProvider, useKeycloak} from "@react-keycloak/web";
 import Keycloak from "keycloak-js";
 import React, { useContext, useState } from "react";
 import contextLogin from "../components/contextLogin";
@@ -65,6 +65,10 @@ const MainKeycloak = () => {
         keycloak.logout();
     };
 
+    const refreshToken = () =>{
+        keycloak.updateToken();
+    }
+
     const onKeycloakEvent = (event) => {
         if (event === 'onReady') {
             setLoadingKeycloak(false);
@@ -76,7 +80,6 @@ const MainKeycloak = () => {
         const { token } = tokens;
         if (token) {
             setKeycloakToken(token);
-            console.log(token)
             setLoggedUserDetail(keycloak.tokenParsed);
             setRole(keycloak.tokenParsed.resource_access.keycloak_rest_api.roles);
         }
@@ -117,6 +120,7 @@ const MainKeycloak = () => {
                         value={{
                             loginUser,
                             logoutUser,
+                            refreshToken,
                         }}
                     >
                         {!loadingKeycloak &&
