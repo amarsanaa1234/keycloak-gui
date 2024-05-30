@@ -1,4 +1,4 @@
-import { message, Tag } from "antd";
+import {message, Tag} from "antd";
 import {
   ApartmentOutlined,
   AuditOutlined,
@@ -117,58 +117,7 @@ const getResultFromResponse = (res) => {
   }
   return res.result;
 };
-const getExceptionObj = (err, withoutShow) => {
-  let errType = "error";
-  let errMsg = null;
-  if (err.request) {
-    if (err.request.status === 500) {
-      if (err.request.responseType === "blob") {
-        errMsg = "Файлын сангаас өгөгдөл олдсонгүй.";
-      } else if (err.request.responseText) {
-        var obj = JSON.parse(err.request.responseText);
-        if (obj?.statusCode === 602) {
-          errType = "warn";
-        }
-        errMsg = obj.message;
-        if (obj.message?.includes("Read timed out executing GET")) {
-          if (obj.message?.includes("/getCitizenIDCardInfo?regNo=")) {
-            errMsg = "ХУР - сервистnpmэй холбогдож чадсангүй";
-          }
-        }
-      } else
-        errMsg = "Сервис дуудах үеийн алдаа.";
-    } else if (err.request.status === 502)
-      errMsg = `Системийн шинэчлэл хийгдэж байна. Түр хүлээнэ үү.`;
-    else if (err.request.status === 504)
-      errMsg = `Сервeрт холбогдож чадсангүй.`;
-  }
 
-  if (!errMsg && err && err.response && err.response.data) {
-    errMsg = err.response.data.message
-      ? err.response.data.message
-      : err.response.data.error;
-  }
-
-  if (!errMsg && err && (err.message || err.msg)) {
-    errMsg = err.message ? err.message : err.msg;
-  }
-
-  if (!errMsg && err) {
-    errMsg = err;
-  }
-
-  if(errMsg && errMsg.includes('\'responseType\' is \'\' or \'text\' (was \'blob\').'))
-    errMsg="Файлийн сангаас олдсонгүй.";
-  return {code: errMsg, type: errType};
-};
-const showErrorMsg = (err, _) => {
-  getErrorMsg(err);
-  // if (!axios.isCancel(err)) {
-  //   if (dur) message.error(getErrorMsg(err), dur);
-  //   else
-  //   message.error(getErrorMsg(err));
-  // }
-};
 const activeStatus = {
   Inactive: 0,
   Active: 1,
@@ -177,11 +126,11 @@ const activeStatus = {
 
 const getActiveStatusTag = (status) => {
   if (status === activeStatus.Active)
-    return <Tag color="success" icon={<CheckCircleOutlined />}>Идэвхтэй</Tag>;
+    return <Tag color="success" icon={<CheckCircleOutlined/>}>Идэвхтэй</Tag>;
   if (status === activeStatus.Inactive)
-    return <Tag color="error" icon={<CloseCircleOutlined />}>Идэвхгүй</Tag>;
+    return <Tag color="error" icon={<CloseCircleOutlined/>}>Идэвхгүй</Tag>;
   if (status === activeStatus.ComingSoon)
-    return <Tag color="processing" icon={<SyncOutlined spin />}>Хүлээгдэж буй</Tag>;
+    return <Tag color="processing" icon={<SyncOutlined spin/>}>Хүлээгдэж буй</Tag>;
   return <Tag>Тодорхойгүй</Tag>;
 };
 
@@ -596,7 +545,7 @@ const reportDataUserOrgStatus = {
     name: "Байгууллагын тохиргоо дутуу",
     color: "orange",
     description: "Байгууллагын тохиргоо дутуу байна",
-    icon: <WarningOutlined />,
+    icon: <WarningOutlined/>,
     sendButtonName: "Тохиргоо дутуу байна",
     jumpUrl: "/orgInfo"
   },
@@ -605,7 +554,7 @@ const reportDataUserOrgStatus = {
     name: "Багцын төрөл олдоогүй",
     color: "volcano",
     description: "Тухайн байгууллагад тохирох багцын төрөл олдоогүй",
-    icon: <WarningOutlined />,
+    icon: <WarningOutlined/>,
     sendButtonName: "Багцын төрөл олдоогүй",
     jumpUrl: ""
   },
@@ -615,7 +564,7 @@ const reportDataUserOrgStatus = {
     color: "volcano",
     description:
       "Тухайн байгууллагад тохирох багцын төрөл идэвхигүй байгаа тул тайлант үед хамрагдаагүй",
-    icon: <WarningOutlined />,
+    icon: <WarningOutlined/>,
     sendButtonName: "Багцын төрөл идэвхигүй",
     jumpUrl: ""
   },
@@ -625,7 +574,7 @@ const reportDataUserOrgStatus = {
     color: "cyan",
     buttonColor: "blue",
     description: "Тохиргоо баталгаажсан тайлан шивхэд бэлэн",
-    icon: <SettingOutlined />,
+    icon: <SettingOutlined/>,
     sendButtonName: "Тайлан шивж эхлээгүй",
     jumpUrl: ""
   },
@@ -634,7 +583,7 @@ const reportDataUserOrgStatus = {
     name: "Тайлан шивэгдэж буй",
     color: "processing",
     description: "Тайлан шивэгдэж буй",
-    icon: <FormOutlined />,
+    icon: <FormOutlined/>,
     sendButtonName: "Тайлан шивэгдэж буй",
     jumpUrl: ""
   },
@@ -643,7 +592,7 @@ const reportDataUserOrgStatus = {
     name: "Тайлан баталгаажсан",
     color: "success",
     description: "Баталгаажсан тайлан",
-    icon: <CheckCircleOutlined />,
+    icon: <CheckCircleOutlined/>,
     sendButtonName: "Баталгаажсан",
     jumpUrl: ""
   }
@@ -678,19 +627,19 @@ const reportPeriodMapStatus = {
     id: 2,
     name: "Тайлант үе нээлттэй",
     color: "success",
-    icon: <CheckCircleOutlined />
+    icon: <CheckCircleOutlined/>
   },
   REPORT_END: {
     id: 3,
     name: "Тайлан шивэх хугацаа дууссан",
     color: "gold",
-    icon: <ClockCircleOutlined />
+    icon: <ClockCircleOutlined/>
   },
   FINISH: {
     id: 4,
     name: "Тайлант үе хаагдсан",
     color: "error",
-    icon: <CloseCircleOutlined />
+    icon: <CloseCircleOutlined/>
   }
 };
 const reportDataHdrStatusOb = {
@@ -698,8 +647,8 @@ const reportDataHdrStatusOb = {
     id: 0,
     name: "Тайлан шивж эхлэх",
     name2: "Тайлан шивж эхлэх",
-    icon: <EditOutlined />,
-    icon2: <EditOutlined style={{color: "#874d00"}} />,
+    icon: <EditOutlined/>,
+    icon2: <EditOutlined style={{color: "#874d00"}}/>,
     color: "default",
     color2: "#facd32"
   },
@@ -707,8 +656,8 @@ const reportDataHdrStatusOb = {
     id: 1,
     name: "Тайлан шивж эхэлсэн",
     name2: "Тайлан шивж буй",
-    icon: <FormOutlined />,
-    icon2: <FormOutlined style={{color: "#f35e06"}} />,
+    icon: <FormOutlined/>,
+    icon2: <FormOutlined style={{color: "#f35e06"}}/>,
     color: "cyan",
     color2: "#f88036"
   },
@@ -716,8 +665,8 @@ const reportDataHdrStatusOb = {
     id: 2,
     name: "Хүлээгдэж буй",
     name2: "Илгээсэн",
-    icon: <SyncOutlined />,
-    icon2: <SyncOutlined style={{color: "#2279cc"}} />,
+    icon: <SyncOutlined/>,
+    icon2: <SyncOutlined style={{color: "#2279cc"}}/>,
     color: "processing",
     color2: "#69c0ff"
   },
@@ -725,8 +674,8 @@ const reportDataHdrStatusOb = {
     id: 3,
     name: "Хянагдаж буй",
     name2: "Хянагдаж буй",
-    icon: <FileSearchOutlined />,
-    icon2: <FileSearchOutlined style={{color: "#011098"}} />,
+    icon: <FileSearchOutlined/>,
+    icon2: <FileSearchOutlined style={{color: "#011098"}}/>,
     color: "processing",
     color2: "#1890ff"
   },
@@ -734,8 +683,8 @@ const reportDataHdrStatusOb = {
     id: 4,
     name: "Буцаагдсан",
     name2: "Буцаагдсан",
-    icon: <UndoOutlined />,
-    icon2: <UndoOutlined style={{color: "orange"}} />,
+    icon: <UndoOutlined/>,
+    icon2: <UndoOutlined style={{color: "orange"}}/>,
     color: "warning",
     color2: "orange"
   },
@@ -743,8 +692,8 @@ const reportDataHdrStatusOb = {
     id: 5,
     name: "Аудит руу буцаасан",
     name2: "Аудит руу буцаасан",
-    icon: <AuditOutlined />,
-    icon2: <AuditOutlined style={{color: "#a071ff"}} />,
+    icon: <AuditOutlined/>,
+    icon2: <AuditOutlined style={{color: "#a071ff"}}/>,
     color: "magenta",
     color2: "#a071ff"
   },
@@ -752,8 +701,8 @@ const reportDataHdrStatusOb = {
     id: 6,
     name: "Цуцлагдсан",
     name2: "Цуцлагдсан",
-    icon: <CloseCircleOutlined />,
-    icon2: <CloseCircleOutlined style={{color: "#f5222d"}} />,
+    icon: <CloseCircleOutlined/>,
+    icon2: <CloseCircleOutlined style={{color: "#f5222d"}}/>,
     color: "red",
     color2: "#f5222d"
   },
@@ -761,8 +710,8 @@ const reportDataHdrStatusOb = {
     id: 7,
     name: "Баталгаажсан",
     name2: "Баталгаажсан",
-    icon: <CheckCircleOutlined />,
-    icon2: <CheckCircleOutlined style={{color: "#078f10"}} />,
+    icon: <CheckCircleOutlined/>,
+    icon2: <CheckCircleOutlined style={{color: "#078f10"}}/>,
     color: "success",
     color2: "#078f10"
   }
@@ -814,7 +763,7 @@ const userOrgReportStatus = {
     name: "Бөглөж байгаа",
     name2: "Хүсэлт үүсгэсэн",
     code: "PROCESSING",
-    icon: <SyncOutlined spin />,
+    icon: <SyncOutlined spin/>,
     color: "processing",
     color2: "#1890ff"
   },
@@ -823,7 +772,7 @@ const userOrgReportStatus = {
     name: "Хүсэлт илгээсэн",
     name2: "Хүсэлт илгээсэн",
     code: "SENT",
-    icon: <SendOutlined />,
+    icon: <SendOutlined/>,
     color: "#2db7f5",
     color2: "#69c0ff"
   },
@@ -832,7 +781,7 @@ const userOrgReportStatus = {
     name: "Баталгаажсан",
     name2: "Баталгаажсан",
     code: "CONFIRMED",
-    icon: <CheckCircleOutlined />,
+    icon: <CheckCircleOutlined/>,
     color: "success",
     color2: "#078f10"
   },
@@ -841,7 +790,7 @@ const userOrgReportStatus = {
     name: "Буцаагдсан",
     name2: "Буцаагдсан",
     code: "RETURNED",
-    icon: <UndoOutlined />,
+    icon: <UndoOutlined/>,
     color: "warning",
     color2: "orange"
   }
@@ -851,19 +800,19 @@ const userOrgRelationStatus = {
   PROCESSING: {
     code: 1,
     name: "Хүлээгдэж байна",
-    icon: <SyncOutlined spin />,
+    icon: <SyncOutlined spin/>,
     color: "processing"
   },
   CONFIRMED: {
     code: 2,
     name: "Баталгаажсан",
-    icon: <CheckCircleOutlined />,
+    icon: <CheckCircleOutlined/>,
     color: "success"
   },
   RETURNED: {
     code: 3,
     name: "Буцаагдсан",
-    icon: <UndoOutlined />,
+    icon: <UndoOutlined/>,
     color: "warning"
   }
 };
@@ -947,7 +896,7 @@ const reportUserOrgHdrStatus = {
   FIX_REQUEST_SEND: {code: 9, name: "Засварын хүсэлт илгээсэн", color: "magenta", icon: null},
   FIX_REQUEST_CANCELED: {code: 10, name: "Засварын хүсэлт цуцлагдсан", color: "red", icon: null},
 
-  VALIDATING: {code: 20, name: "Шалгагдаж буй", color: "geekblue", icon: <LoadingOutlined />},
+  VALIDATING: {code: 20, name: "Шалгагдаж буй", color: "geekblue", icon: <LoadingOutlined/>},
   REPORT_VIEW: {code: 21, name: "Тайлан харсан", color: "gold"}
 };
 const reportHdrType = {
@@ -961,36 +910,36 @@ const optionPermissions = {
     code: "ReportWritingType",
     name: "Тайлангийн төрөл",
     tagColor: "blue",
-    icon: <ContainerOutlined />,
-    iconLarge: <ContainerOutlined style={{fontSize: "large", fontWeight: "bold"}} />
+    icon: <ContainerOutlined/>,
+    iconLarge: <ContainerOutlined style={{fontSize: "large", fontWeight: "bold"}}/>
   },
   OrgTypeMap: {
     code: "OrgTypeMap",
     name: "Байгууллагийн өмчийн хэлбэр",
     tagColor: "volcano",
-    icon: <BankOutlined />,
-    iconLarge: <BankOutlined style={{fontSize: "large", fontWeight: "bold"}} />
+    icon: <BankOutlined/>,
+    iconLarge: <BankOutlined style={{fontSize: "large", fontWeight: "bold"}}/>
   },
   ParentOrg: {
     code: "ParentOrg",
     name: "Толгой компани",
     tagColor: "gold",
-    icon: <ApartmentOutlined />,
-    iconLarge: <ApartmentOutlined style={{fontSize: "large", fontWeight: "bold"}} />
+    icon: <ApartmentOutlined/>,
+    iconLarge: <ApartmentOutlined style={{fontSize: "large", fontWeight: "bold"}}/>
   },
   LargeOrg: {
     code: "LargeOrg",
     name: "Нийтийн ашиг сонирхолын байгууллага",
     tagColor: "magenta",
-    icon: <FundViewOutlined />,
-    iconLarge: <FundViewOutlined style={{fontSize: "large", fontWeight: "bold"}} />
+    icon: <FundViewOutlined/>,
+    iconLarge: <FundViewOutlined style={{fontSize: "large", fontWeight: "bold"}}/>
   },
   License: {
     code: "License",
     name: "Тусгай зөвшөөрөл",
     tagColor: "purple",
-    icon: <FileProtectOutlined />,
-    iconLarge: <FileProtectOutlined style={{fontSize: "large", fontWeight: "bold"}} />
+    icon: <FileProtectOutlined/>,
+    iconLarge: <FileProtectOutlined style={{fontSize: "large", fontWeight: "bold"}}/>
   }
 };
 
@@ -1040,9 +989,7 @@ export {
   expressionType,
   reportFormType,
   cellType,
-  showErrorMsg,
   getErrorMsg,
-  getExceptionObj,
   getResultFromResponse,
   encryptValue,
   decryptValue,
@@ -1066,4 +1013,22 @@ export {
   perMapUserRoleActionStatus,
   getWindowHeightByPercent,
   reportReportWritingConfigType
+};
+
+export const getToken = () => {
+  return localStorage.getItem('jwtToken');
+}
+
+export const getService = async (serviceUrl, body) => {
+  try {
+    const response = await axios.get(`/api${serviceUrl}`, {
+      headers: {"Authorization": `Bearer ${getToken()}`},
+      params: body
+    });
+    return response.data;
+  } catch (error) {
+    let msg = error?.message;
+    if (error?.response?.data?.message) msg = error.response.data.message;
+    message.warning(msg);
+  }
 };

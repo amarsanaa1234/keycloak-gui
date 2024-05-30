@@ -5,8 +5,7 @@ import {MenuOutlined, InboxOutlined, ExclamationOutlined, CalendarOutlined, Chec
 
 const RoleSpecificComponents = {
   Home:{
-    id:"1",
-    path: "/studentMenu",
+    id:"/",
     perRoleType: perRoleType.Organization,
     name: "Нүүр",
     componentName: "Home",

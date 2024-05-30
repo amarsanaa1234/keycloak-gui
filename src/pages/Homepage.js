@@ -1,19 +1,30 @@
-import React from 'react';
-import { Layout } from 'antd';
-
+import React, {useEffect, useState} from 'react';
+import {Layout, Spin} from 'antd';
+import {getService} from "../tools/utils";
 
 const Homepage = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState("");
 
-    // useEffect(() => {
-    //     fetch(`http://localhost:8081/api/v1/getStudentData`).then(res => {
-    //         console.log(res.json());
-    //     })
-    // }, []);
+  const getSomeData = () => {
+    setLoading(true);
+    getService("/v1/helloFirst")
+      .then((result) => {
+        setData(result);
+      })
+      .finally(() => setLoading(false));
+  }
 
-    return (
-            <Layout style={{marginTop: '200px'}}>
-                <p>HOME page</p>
-            </Layout>
-    );
+  useEffect(() => {
+    getSomeData();
+  }, []);
+
+  return (
+    <Spin spinning={loading}>
+      <Layout style={{marginTop: '200px'}}>
+        <p>HOME page</p> {data}
+      </Layout>
+    </Spin>
+  );
 };
 export default Homepage;
