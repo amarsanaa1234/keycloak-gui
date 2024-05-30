@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import MainHeader from "../components/toolComponents/MainHeader";
-import {Avatar, Calendar, Card, Layout, Menu} from "antd";
+import {Avatar, Calendar, Card, Layout, Menu, Spin} from "antd";
 import MainFooter from "../components/toolComponents/MainFooter";
 import {RoleSpecificComponents} from "../components/RoleSpecificComponents";
 import {HomeOutlined, LockOutlined, PoweroffOutlined, UserOutlined} from '@ant-design/icons';
 import './student.css'
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {getService} from "../tools/utils";
 
 const {Sider, Content} = Layout;
 const layoutStyle = {
@@ -27,9 +28,24 @@ function getItem(label, key, icon, children, component) {
   };
 }
 
-export const MainLayout = ({role}) => {
+export const MainLayout = ({role, email}) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   const roleComponents = [];
+
+  useEffect(() => {
+    getSomeData();
+  }, []);
+  const getSomeData = () => {
+    setLoading(true);
+    getService("/student/getStudentData", {email: email})
+      .then((result) => {
+        setData(result);
+      })
+      .finally(() => setLoading(false));
+  }
+
 
   const roleComp = () => {
     role.forEach((item) => {
@@ -63,7 +79,8 @@ export const MainLayout = ({role}) => {
   }
 
   return (
-    <Layout style={layoutStyle}>
+    <Spin spinning={loading}>
+      <Layout style={layoutStyle}>
       {roleComp()}
       <Content style={contentStyle}>
         <MainHeader/>
@@ -78,7 +95,7 @@ export const MainLayout = ({role}) => {
               <Avatar shape="square" size={64} icon={<UserOutlined/>}
                       style={{margin: '0px 30px 0px 0px '}}/>
               <div className='profile'>
-                <p><HomeOutlined style={{marginRight: '5px'}}/>B200910803</p>
+                <p><HomeOutlined style={{marginRight: '5px'}}/>{data.code}</p>
                 <p><LockOutlined style={{marginRight: '5px'}}/>Нууц үг солих</p>
                 <p><PoweroffOutlined style={{marginRight: '5px'}}/>Гарах</p>
               </div>
@@ -121,6 +138,7 @@ export const MainLayout = ({role}) => {
         <MainFooter/>
       </Content>
     </Layout>
+    </Spin>
   );
 };
 

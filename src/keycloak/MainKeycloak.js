@@ -29,6 +29,8 @@ const MainKeycloak = () => {
   const [loadingUseEffect, setLoadingUseEffect] = useState(true);
   const [loadingKeycloak, setLoadingKeycloak] = useState(true);
   const [role, setRole] = useState([]);
+  const [email, setEmail] = useState();
+
   const loginUser = () => {
     keycloak.login();
   };
@@ -53,6 +55,7 @@ const MainKeycloak = () => {
       setLoggedUserDetail(keycloak.tokenParsed);
       localStorage.setItem('jwtToken', token);
       setRole(keycloak.tokenParsed.resource_access.keycloak_rest_api.roles);
+      setEmail(keycloak.tokenParsed.email)
     }
   };
   React.useEffect(() => {
@@ -70,7 +73,7 @@ const MainKeycloak = () => {
       onEvent={onKeycloakEvent}>
       <contextKeycloak.Provider value={{loginUser, logoutUser, refreshToken}}>
         {!loadingKeycloak &&
-          <MainLayout role={role}/>
+          <MainLayout role={role} email={email}/>
         }
       </contextKeycloak.Provider>
     </KeycloakProvider>
