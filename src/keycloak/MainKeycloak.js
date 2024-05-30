@@ -41,6 +41,12 @@ const MainKeycloak = () => {
     keycloak.updateToken();
   }
 
+  const changePassword = () => {
+    keycloak.login({
+      action: "UPDATE_PASSWORD",
+    });
+  }
+
   const onKeycloakEvent = (event) => {
     if (event === 'onReady') {
       setLoadingKeycloak(false);
@@ -54,6 +60,7 @@ const MainKeycloak = () => {
       setKeycloakToken(token);
       setLoggedUserDetail(keycloak.tokenParsed);
       localStorage.setItem('jwtToken', token);
+      localStorage.setItem('user_role', keycloak.tokenParsed.resource_access.keycloak_rest_api.roles);
       setRole(keycloak.tokenParsed.resource_access.keycloak_rest_api.roles);
       setEmail(keycloak.tokenParsed.email)
     }
@@ -71,7 +78,7 @@ const MainKeycloak = () => {
       initConfig={keycloakProviderInitConfig}
       onTokens={onKeycloakTokens}
       onEvent={onKeycloakEvent}>
-      <contextKeycloak.Provider value={{loginUser, logoutUser, refreshToken}}>
+      <contextKeycloak.Provider value={{loginUser, logoutUser, refreshToken, changePassword}}>
         {!loadingKeycloak &&
           <MainLayout role={role} email={email}/>
         }

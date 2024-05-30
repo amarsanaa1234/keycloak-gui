@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import MainHeader from "../components/toolComponents/MainHeader";
-import {Avatar, Calendar, Card, Layout, Menu, Spin} from "antd";
+import {Avatar, Button, Calendar, Card, Layout, Menu, Spin} from "antd";
 import MainFooter from "../components/toolComponents/MainFooter";
 import {RoleSpecificComponents} from "../components/RoleSpecificComponents";
 import {HomeOutlined, LockOutlined, PoweroffOutlined, UserOutlined} from '@ant-design/icons';
 import './student.css'
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {Link, Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {getService} from "../tools/utils";
+import contextKeycloak from "./contextKeycloak";
 
 const {Sider, Content} = Layout;
 const layoutStyle = {
@@ -32,10 +33,20 @@ export const MainLayout = ({role, email}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [isTrue, setIsTrue] = useState(false) ;
   const roleComponents = [];
+  const {logoutUser, changePassword} = React.useContext(contextKeycloak);
 
   useEffect(() => {
-    getSomeData();
+    const role = localStorage.getItem('user_role');
+    if(role.includes('client_teacher')){
+      setIsTrue(true);
+      getTeacherDescData();
+    }else {
+      setIsTrue(false);
+      getSomeData();
+
+    }
   }, []);
   const getSomeData = () => {
     setLoading(true);
@@ -46,6 +57,13 @@ export const MainLayout = ({role, email}) => {
       .finally(() => setLoading(false));
   }
 
+  const getTeacherDescData = () => {
+    getService("/teacher/getTeacherDescData", {email: email})
+        .then((result) => {
+          setData(result);
+        })
+        .finally(() => setLoading(false));
+  }
 
   const roleComp = () => {
     role.forEach((item) => {
@@ -65,7 +83,6 @@ export const MainLayout = ({role, email}) => {
       }
     });
   };
-
   const renderComponent = () => {
     return (
       <Routes>
@@ -95,9 +112,9 @@ export const MainLayout = ({role, email}) => {
               <Avatar shape="square" size={64} icon={<UserOutlined/>}
                       style={{margin: '0px 30px 0px 0px '}}/>
               <div className='profile'>
-                <p><HomeOutlined style={{marginRight: '5px'}}/>{data.code}</p>
-                <p><LockOutlined style={{marginRight: '5px'}}/>Нууц үг солих</p>
-                <p><PoweroffOutlined style={{marginRight: '5px'}}/>Гарах</p>
+                <p><HomeOutlined style={{marginRight: '5px'}}/><Link to="/"><Button type="link" >{data.code}</Button></Link></p>
+                <p><LockOutlined style={{marginRight: '5px'}}/><Button type="link" onClick={changePassword}>Нууц үг солих</Button></p>
+                <p><PoweroffOutlined style={{marginRight: '5px'}}/><Button type="link" onClick={logoutUser}>Гарах</Button></p>
               </div>
             </Card>
             <Menu

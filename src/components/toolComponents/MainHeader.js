@@ -3,6 +3,7 @@ import {Button, Flex, Image, Layout, Modal, Space, Statistic, Tooltip} from "ant
 import shutisImage from '../../img/mustlogo.png';
 import contextKeycloak from "../../keycloak/contextKeycloak";
 import {useKeycloak} from "@react-keycloak/web";
+import {RetweetOutlined } from "@ant-design/icons";
 
 const {Countdown} = Statistic;
 
@@ -47,6 +48,11 @@ const MainHeader = () => {
     logoutUser();
   };
 
+  const refreshTok = () => {
+    refreshToken();
+    setRefresh(!refresh);
+  };
+
   return (
     <Header style={headerStyle}>
       <div className="demo-logo">
@@ -60,6 +66,7 @@ const MainHeader = () => {
           <Tooltip placement={"bottom"} title={"Хандалтын хугацаа"}>
             <Countdown onFinish={showModal} value={tokenExpireDate} valueStyle={{fontSize: '16px', color: 'gray'}}/>
           </Tooltip>
+          <Button type="link" onClick={() => refreshTok} icon={<RetweetOutlined />} />
           <Button type="primary" onClick={logoutUser}>Гарах</Button>
         </Space>
         <Modal

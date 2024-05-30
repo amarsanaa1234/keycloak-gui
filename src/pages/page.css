@@ -2,6 +2,9 @@
     background-color: #003765;
     color: #fff; /* Optional: change text color to improve readability */
 }
+:where(.css-dev-only-do-not-override-1cir1dp).ant-descriptions .ant-descriptions-item-content{
+    color: #fff;
+}
 :where(.css-dev-only-do-not-override-6l350z).ant-descriptions .ant-descriptions-item-content{
     color: #fff;
 }
@@ -13,4 +16,20 @@
 }
 :where(.css-dev-only-do-not-override-6l350z).ant-descriptions.ant-descriptions-bordered >.ant-descriptions-view .ant-descriptions-row >.ant-descriptions-item-label, :where(.css-dev-only-do-not-override-6l350z).ant-descriptions.ant-descriptions-bordered >.ant-descriptions-view .ant-descriptions-row >.ant-descriptions-item-content{
     border-inline-end: 1px solid #fff;
+}
+:where(.css-dev-only-do-not-override-1cir1dp).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-1cir1dp).ant-table-wrapper .ant-table-thead >tr>td{
+    color: black !important;
+}
+.card{
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}
+.card-box{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.card-box-img{
+    border-radius: 20px;
 }

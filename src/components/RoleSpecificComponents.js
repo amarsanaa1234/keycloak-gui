@@ -307,6 +307,20 @@ const RoleSpecificComponents = {
     },
     subRouter:[]
   },
+  client_teacher: {
+    id:"26",
+    path: "/studentMenu",
+    perRoleType: perRoleType.Organization,
+    name: "Багш",
+    componentName: "client_teacher",
+    component: <>Багш</>,
+    icon:<MenuOutlined />,
+    permissions: {
+      ShowMenuInstructions: {code: "Instructions_ShowMenuInstructions", name: "Цэсээр зааварчилгаа харуулах"},
+    },
+    subRouter: ["Study_plan", ,
+      "Course_choice_request", "Graduate_Student_Circular", "Scholarship"],
+  },
 
 };
 

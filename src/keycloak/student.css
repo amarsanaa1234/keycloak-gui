@@ -49,3 +49,6 @@ p{
     gap: 5px;
     color: white;
 }
+:where(.css-dev-only-do-not-override-1cir1dp).ant-btn-link{
+    color: white;
+}
